@@ -1,0 +1,81 @@
+import time
+import sys
+import matplotlib.pyplot as plt
+
+sys.setrecursionlimit(30000)
+
+# ==========================================
+# Binary Search O(log n)
+# ==========================================
+
+def bs_iterative(data, target):
+    low, high = 0, len(data) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if data[mid] == target:
+            return True
+        elif data[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return False
+
+def bs_recursive(data, low, high, target):
+    if low > high:
+        return False
+    mid = (low + high) // 2
+    if data[mid] == target:
+        return True
+    elif data[mid] < target:
+        return bs_recursive(data, mid + 1, high, target)
+    else:
+        return bs_recursive(data, low, mid - 1, target)
+
+# ==========================================
+# INPUT USER
+# ==========================================
+
+print("=== SISTEM PENCARIAN USER ID ===")
+target = int(input("Masukkan User ID yang ingin dicari: "))
+
+sizes = [1, 10, 100, 500, 1000, 5000, 10000]
+
+time_iter = []
+time_rek = []
+
+print("\nHasil Waktu Eksekusi (O(log n))")
+print("Jumlah Data | Time Iteratif (detik) | Time Rekursif (detik)")
+print("-" * 65)
+
+for n in sizes:
+    data = list(range(1, n + 1))
+
+    # Iteratif
+    start = time.perf_counter()
+    bs_iterative(data, target)
+    t_i = time.perf_counter() - start
+
+    # Rekursif
+    start = time.perf_counter()
+    bs_recursive(data, 0, n - 1, target)
+    t_r = time.perf_counter() - start
+
+    time_iter.append(t_i)
+    time_rek.append(t_r)
+
+    print(f"{n:<11} | {t_i:<20.8f} | {t_r:<20.8f}")
+
+# ==========================================
+# GRAFIK RUNNING TIME
+# ==========================================
+
+plt.figure(figsize=(8, 5))
+plt.plot(sizes, time_iter, marker='o', label="Iteratif O(log n)")
+plt.plot(sizes, time_rek, marker='s', label="Rekursif O(log n)")
+
+plt.xlabel("Jumlah User ID (n)")
+plt.ylabel("Waktu Eksekusi (detik)")
+plt.title("Perbandingan Running Time Binary Search O(log n)")
+plt.legend()
+plt.grid(True)
+plt.show()
