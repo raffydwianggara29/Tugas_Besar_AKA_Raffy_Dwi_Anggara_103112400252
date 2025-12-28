@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 sys.setrecursionlimit(30000)
 
+
 def bs_iterative(data, target):
     low, high = 0, len(data) - 1
     while low <= high:
