@@ -4,10 +4,6 @@ import matplotlib.pyplot as plt
 
 sys.setrecursionlimit(30000)
 
-# ==========================================
-# Binary Search O(log n)
-# ==========================================
-
 def bs_iterative(data, target):
     low, high = 0, len(data) - 1
     while low <= high:
@@ -30,10 +26,6 @@ def bs_recursive(data, low, high, target):
         return bs_recursive(data, mid + 1, high, target)
     else:
         return bs_recursive(data, low, mid - 1, target)
-
-# ==========================================
-# INPUT USER
-# ==========================================
 
 print("=== SISTEM PENCARIAN USER ID ===")
 target = int(input("Masukkan User ID yang ingin dicari: "))
@@ -65,9 +57,6 @@ for n in sizes:
 
     print(f"{n:<11} | {t_i:<20.8f} | {t_r:<20.8f}")
 
-# ==========================================
-# GRAFIK RUNNING TIME
-# ==========================================
 
 plt.figure(figsize=(8, 5))
 plt.plot(sizes, time_iter, marker='o', label="Iteratif O(log n)")
